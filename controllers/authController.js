@@ -1,5 +1,5 @@
 module.exports.signup_get = (req, res)=>{
-    res.send('signup page');
+    res.render('signup');
 }
 
 module.exports.login_get = (req, res)=>{

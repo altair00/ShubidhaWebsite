@@ -3,6 +3,7 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 const authRoutes = require('./router/authRouter');
+const accommodation = require('./router/accommodation');
 const path = require('path');
 
 
@@ -18,8 +19,18 @@ app.get('/', (req, res)=>{
     res.render('homepage');
 })
 
+app.get('/about', (req, res)=>{
+    res.render('about');
+})
+
+app.get('/contact', (req, res)=>{
+    res.render('contact');
+})
+
 // login routes
 app.use(authRoutes);
+//accomodation routes
+app.use(accommodation);
 
 app.get('*', (req, res) => {
     res.render('error');
