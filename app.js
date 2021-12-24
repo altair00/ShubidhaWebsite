@@ -5,11 +5,13 @@ const port = process.env.PORT || 3000;
 const authRoutes = require('./router/authRouter');
 const accommodation = require('./router/accommodation');
 const path = require('path');
+const favicon = require('serve-favicon');
 
 
 // defining the middlewares
 app.use(express.static('public'));
 app.use(express.json());
+app.use(favicon(path.join(__dirname, 'public/favicon.ico')));
 
 // setting up view engine
 app.set('view engine', 'ejs');
