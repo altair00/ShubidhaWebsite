@@ -55,6 +55,7 @@ module.exports.signup_post = async (req, res)=>{
 
     try{
         const user = await User.create({  first_name, last_name, email, dob, phone, password });
+        req.session.userID = user._id;
         res.status(201).json({ user: user._id }); //means successfully added the user in the db
     }catch(err){
         const errors = handleErrors(err);
@@ -67,7 +68,7 @@ module.exports.login_post = async (req, res)=>{
 
     try {
         const user = await User.login(email, password);
-
+        req.session.userID = user._id;
         res.status(200).json({ user: user._id });
 
     } catch (err) {
@@ -75,5 +76,17 @@ module.exports.login_post = async (req, res)=>{
         res.status(400).json({ errors });
 
     }
+}
+
+module.exports.logout_post = (req, res) => {
+    req.session.destroy( err => {
+        if (err){
+            return res.redirect('/');
+        }
+
+        res.clearCookie(process.env.SESS_NAME);
+        res.redirect('/login');
+    });
+
 }
 

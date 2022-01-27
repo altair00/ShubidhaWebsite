@@ -135,13 +135,14 @@ body {
 
       const data = await res.json();
 
-      console.log(data);
+      //console.log(data);
 
       if (data.errors){
         email_error.textContent = data.errors.email;
         password_error.textContent = data.errors.password;
       } 
       if (data.user){
+		  location.assign('/dashboard');
 
       }
     } catch (err) {
