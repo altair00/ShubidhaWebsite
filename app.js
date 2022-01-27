@@ -6,16 +6,29 @@ const authRoutes = require('./router/authRouter');
 const accommodation = require('./router/accommodation');
 const path = require('path');
 const favicon = require('serve-favicon');
+const connectDB = require('./database/connection');
+const bodyParser = require('body-parser');
+
+
+// connecting the database 
+connectDB();
 
 
 // defining the middlewares
 app.use(express.static('public'));
 app.use(express.json());
 app.use(favicon(path.join(__dirname, 'public/favicon.ico')));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
 
 // setting up view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'templates/views'));
+
+
+
 
 app.get('/', (req, res)=>{
     res.render('homepage');
@@ -29,6 +42,8 @@ app.get('/contact', (req, res)=>{
     res.render('contact');
 })
 
+
+
 // login routes
 app.use(authRoutes);
 //accomodation routes
@@ -37,6 +52,8 @@ app.use(accommodation);
 app.get('*', (req, res) => {
     res.render('error');
 })
+
+
 
 
 app.listen(port, function() {
